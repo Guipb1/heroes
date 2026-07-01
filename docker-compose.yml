@@ -1,0 +1,25 @@
+# OBS: as credenciais abaixo são apenas para o ambiente LOCAL de desenvolvimento.
+# Em produção elas viriam de variáveis de ambiente / secrets (ver "Melhorias" no README).
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: hero-factory-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: hero_factory
+    ports:
+      # host:container 
+      - "3306:3306"
+    volumes:
+      # persiste os dados mesmo se o container for recriado
+      - hero_factory_data:/var/lib/mysql
+    healthcheck:
+      # deixa o Docker saber quando o MySQL está realmente pronto para conexões
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-prootpass"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  hero_factory_data:
