@@ -5,12 +5,16 @@ node_modules/
 .env
 .env.*
 !.env.example
+!.env.test.example
 
 # Saída de build
 dist/
 build/
 .next/
 out/
+
+# Cliente do Prisma é gerado a partir do schema.prisma (via `prisma generate`)
+backend/src/generated/
 
 # Logs
 *.log
